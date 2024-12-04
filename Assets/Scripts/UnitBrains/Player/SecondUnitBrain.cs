@@ -49,7 +49,24 @@ namespace UnitBrains.Player
             List<Vector2Int> result = GetReachableTargets();
             while (result.Count > 1)
             {
-                result.RemoveAt(result.Count - 1);
+                float closestToBaseDistance = float.MaxValue;
+                Vector2Int closestEnemy;
+
+                foreach (Vector2Int enemy in result)
+                {
+                    float currentEnemyDistance = DistanceToOwnBase(enemy);
+
+                    if (closestToBaseDistance > currentEnemyDistance)
+                    {
+                        closestToBaseDistance = currentEnemyDistance;
+                        closestEnemy = enemy;
+                    }
+
+                    result.Clear();
+                    result.Add(enemy);
+                    return result;
+                }
+
             }
             return result;
             ///////////////////////////////////////
