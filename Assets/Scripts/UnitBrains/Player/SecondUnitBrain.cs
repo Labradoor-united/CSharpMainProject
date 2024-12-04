@@ -47,27 +47,26 @@ namespace UnitBrains.Player
             // Homework 1.4 (1st block, 4rd module)
             ///////////////////////////////////////
             List<Vector2Int> result = GetReachableTargets();
-            while (result.Count > 1)
+
+            float closestToBaseDistance = float.MaxValue;
+            Vector2Int closestEnemy;
+
+            foreach (Vector2Int enemy in result)
             {
-                float closestToBaseDistance = float.MaxValue;
-                Vector2Int closestEnemy;
+                float currentEnemyDistance = DistanceToOwnBase(enemy);
 
-                foreach (Vector2Int enemy in result)
+                if (closestToBaseDistance > currentEnemyDistance)
                 {
-                    float currentEnemyDistance = DistanceToOwnBase(enemy);
-
-                    if (closestToBaseDistance > currentEnemyDistance)
-                    {
-                        closestToBaseDistance = currentEnemyDistance;
-                        closestEnemy = enemy;
-                    }
-
-                    result.Clear();
-                    result.Add(enemy);
-                    return result;
+                    closestToBaseDistance = currentEnemyDistance;
+                    closestEnemy = enemy;
                 }
 
+                result.Clear();
+                result.Add(enemy);
+                return result;
             }
+
+            
             return result;
             ///////////////////////////////////////
         }
